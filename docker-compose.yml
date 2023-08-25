@@ -1,0 +1,41 @@
+version: "3.3"
+services:
+  app:
+    build: ./
+    ports:
+      - "8000:8000"
+    depends_on:
+      - es
+    volumes:
+      - .:/app
+    command:  python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8000
+
+
+#  postgres:
+#    image: postgres:latest
+#    volumes:
+#      - pgdata:/var/lib/postgresql/data
+
+  es:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.8.1"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+          - esdata:/usr/share/elasticsearch/data
+    environment:
+      discovery.type: single-node
+
+  kibana:
+    image: "docker.elastic.co/kibana/kibana:8.9.1"
+    ports:
+      - "5601:5601"
+    environment:
+      - 'ELASTICSEARCH_HOSTS="host.docker.internal"'
+
+volumes:
+  esdata:
+    driver: local
+  pgdata:
+    driver: local
