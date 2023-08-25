@@ -1,0 +1,2 @@
+run docker-compose up to get all the services up and running. It also automatically supplies dummy data in all the models to search which can be connected to directly using Dbeaver or pgadmin to check the data and tables 
+link to documentation - https://documenter.getpostman.com/view/10412699/2s9Y5Wyj7Y
